@@ -1,5 +1,5 @@
 <template>
-  <div class="dock-zone" :style="props.layout">
+  <div class="dock-zone" :style="style">
     <div v-for="slot in slots" :key="slot.id">{{ slot.id }}</div>
   </div>
 </template>
@@ -9,6 +9,8 @@ import { DockZoneModel } from '../models/DockZoneModel';
 import { computed } from 'vue';
 
 const props = defineProps<{ layout: DockZoneModel; counter: number; start: number }>();
+
+const style = computed(() => ({ ...props.layout }));
 
 const slots = computed(() => {
   const list: any[] = [];
