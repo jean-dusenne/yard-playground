@@ -1,5 +1,5 @@
 <template>
-  <div class="dock-zone" :style="style">
+  <div class="dock-zone" :style="layoutZone">
     <div v-for="slot in slots" :key="slot.id">{{ slot.id }}</div>
   </div>
 </template>
@@ -10,7 +10,7 @@ import { computed } from 'vue';
 
 const props = defineProps<{ layout: DockZoneModel; counter: number; start: number }>();
 
-const style = computed(() => ({ ...props.layout }));
+const layoutZone = computed(() => ({ ...props.layout }));
 
 const slots = computed(() => {
   const list: any[] = [];
@@ -33,7 +33,7 @@ const slots = computed(() => {
     border: 1px solid red;
     background: #fff;
     white-space: nowrap;
-    height: 100%;
+    height: v-bind('layoutZone.height');
     text-align: center;
     display: flex;
     justify-content: center;
