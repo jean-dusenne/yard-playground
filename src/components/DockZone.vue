@@ -1,7 +1,7 @@
 <template>
   <div class="dock-zone" :style="layoutZone">
     {{ props.dockName }}
-    <div class="container">
+    <div class="container" :class="{ vertical: props.vertical }">
       <div v-for="(slot, index) in slots" :key="slot.id" :class="{ occupied: isPrime(index + 1 + start) }">
         <VTooltip>
           <a>{{ slot.id }}</a>
@@ -20,7 +20,14 @@
 import { DockZoneModel } from '../models/DockZoneModel';
 import { computed } from 'vue';
 
-const props = defineProps<{ layout: DockZoneModel; counter: number; start: number; dockName: string }>();
+const props = defineProps<{
+  vertical?: boolean;
+  layout: DockZoneModel;
+  counter: number;
+  start: number;
+  dockName: string;
+  slotHeight: string;
+}>();
 
 const layoutZone = computed(() => ({ ...props.layout }));
 
@@ -44,10 +51,17 @@ const slots = computed(() => {
 
 <style scoped lang="scss">
 .dock-zone {
+  height: auto;
+  position: absolute;
   & > .container {
+    &.vertical {
+      grid-template-columns: none;
+    }
+    &:not(.vertical) {
+      grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+    }
     display: grid;
 
-    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
     grid-gap: 5px;
 
     & > div {
@@ -55,7 +69,7 @@ const slots = computed(() => {
       border: 1px solid red;
       background: #fff;
       white-space: nowrap;
-      height: v-bind('layoutZone.height');
+      height: v-bind('props.slotHeight');
       text-align: center;
       display: flex;
       justify-content: center;
