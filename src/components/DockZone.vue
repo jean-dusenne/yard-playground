@@ -3,7 +3,7 @@
     {{ props.dockName }}
     <div class="container" :class="{ vertical: props.vertical }">
       <div v-for="(slot, index) in slots" :key="slot.id" :class="{ occupied: isPrime(index + 1 + start) }">
-        <VTooltip>
+        <VTooltip :triggers="smAndLarger ? ['click', 'hover'] : ['click', 'focus']">
           <a>{{ slot.id }}</a>
 
           <template #popper>
@@ -19,6 +19,11 @@
 <script lang="ts" setup>
 import { DockZoneModel } from '../models/DockZoneModel';
 import { computed } from 'vue';
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
+
+const breakpoints = useBreakpoints(breakpointsTailwind);
+
+const smAndLarger = breakpoints.greater('sm');
 
 const props = defineProps<{
   vertical?: boolean;
