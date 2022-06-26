@@ -15,13 +15,16 @@
     "@vueuse/core": "^8.7.5",
     "axios": "^0.27.2",
     "element-plus": "^2.2.6",
+    "file-saver": "^2.0.5",
     "floating-vue": "^2.0.0-beta.17",
+    "html2canvas": "^1.4.1",
     "pinia": "^2.0.14",
     "sanitize.css": "^13.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/jsdom": "16.2.14",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-prettier": "7.0.0",
