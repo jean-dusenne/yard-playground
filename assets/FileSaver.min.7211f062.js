@@ -1,4 +1,4 @@
-import{x as WA}from"./index.6b66f599.js";/*!
+import{x as WA}from"./index.4dd0c837.js";/*!
  * html2canvas 1.4.1 <https://html2canvas.hertzen.com>
  * Copyright (c) 2022 Niklas von Hertzen <https://hertzen.com>
  * Released under MIT License
