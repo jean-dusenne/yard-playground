@@ -2,13 +2,12 @@
   <div class="dock-zone" :style="layoutZone">
     {{ props.dockName }}
     <div class="container" :class="{ vertical: props.vertical }">
-      <div v-for="(slot, index) in slots" :key="slot.id" :class="{ occupied: isPrime(index + 1 + start) }">
+      <div v-for="(slot, index) in slots" :key="slot.id" :class="{ taken: isPrime(index + start) }">
         <VTooltip :triggers="smAndLarger ? ['click', 'hover'] : ['click', 'focus']">
           <a>{{ slot.id }}</a>
-
           <template #popper>
             slot name: {{ slot.name }} <br />
-            status: {{ isPrime(index + 1) ? 'occupied' : 'free' }}
+            status: {{ isPrime(index + start) ? 'taken' : 'free' }}
           </template>
         </VTooltip>
       </div>
@@ -42,12 +41,13 @@ const isPrime = (n: number): boolean => {
   while (start <= limit) {
     if (n % start++ < 1) return false;
   }
+  console.log('isPrime', n, n > 1);
   return n > 1;
 };
 
 const slots = computed(() => {
-  const list: any[] = [];
-  for (let i = 1; i <= props.counter; i++) {
+  const list: Record<string, string | number>[] = [];
+  for (let i = 0; i <= props.counter; i++) {
     list.push({ id: props.start + i, name: `slot-${props.start + i}` });
   }
   return list;
@@ -83,7 +83,7 @@ const slots = computed(() => {
         background: #d1d1d1;
         color: #fff;
       }
-      &.occupied {
+      &.taken {
         background: orange;
       }
     }
