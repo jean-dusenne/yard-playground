@@ -2,11 +2,11 @@
   <div class="dock-zone" :style="layoutZone">
     {{ props.dockName }}
     <div class="container" :class="{ vertical: props.vertical }">
-      <div v-for="(slot, index) in slots" :key="slot.id" :class="{ taken: isPrime(index + start) }">
+      <div v-for="(dock, index) in docks" :key="dock.id" :class="{ taken: isPrime(index + start) }">
         <VTooltip :triggers="smAndLarger ? ['click', 'hover'] : ['click', 'focus']">
-          <a>{{ slot.id }}</a>
+          <a>{{ dock.id }}</a>
           <template #popper>
-            slot name: {{ slot.name }} <br />
+            Dock name: {{ dock.name }} <br />
             status: {{ isPrime(index + start) ? 'taken' : 'free' }}
           </template>
         </VTooltip>
@@ -30,7 +30,7 @@ const props = defineProps<{
   counter: number;
   start: number;
   dockName: string;
-  slotHeight: string;
+  itemHeight: string;
 }>();
 
 const layoutZone = computed(() => ({ ...props.layout }));
@@ -41,14 +41,13 @@ const isPrime = (n: number): boolean => {
   while (start <= limit) {
     if (n % start++ < 1) return false;
   }
-  console.log('isPrime', n, n > 1);
   return n > 1;
 };
 
-const slots = computed(() => {
+const docks = computed(() => {
   const list: Record<string, string | number>[] = [];
   for (let i = 0; i <= props.counter; i++) {
-    list.push({ id: props.start + i, name: `slot-${props.start + i}` });
+    list.push({ id: props.start + i, name: `dock-${props.start + i}` });
   }
   return list;
 });
@@ -74,7 +73,7 @@ const slots = computed(() => {
       border: 1px solid red;
       background: #fff;
       white-space: nowrap;
-      height: v-bind('props.slotHeight');
+      height: v-bind('props.itemHeight');
       text-align: center;
       display: flex;
       justify-content: center;
