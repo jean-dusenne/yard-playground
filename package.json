@@ -20,8 +20,7 @@
     "floating-vue": "^2.0.0-beta.24",
     "html2canvas": "^1.4.1",
     "sanitize.css": "^13.0.0",
-    "vue": "^3.2.47",
-    "vue-hotjar-next": "^1.4.0"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
