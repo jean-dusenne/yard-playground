@@ -13,16 +13,26 @@ jobs:
     runs-on: ubuntu-latest
 
 
+
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: 👷 Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.3.5
-      - name:  Run test
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-      - run: npm install
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
       - run: npm run coverage
       - run: npm run build --if-present
 
