@@ -1,0 +1,48 @@
+name: Dependabot reviewer
+
+on: pull_request_target
+
+permissions:
+  contents: write
+  pull-requests: write
+
+
+
+jobs:
+  review-dependabot-pr:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    steps:
+      - name: 👷 Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.3.5
+      - name:  Run test
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run coverage
+      - run: npm run build --if-present
+
+      - name: 🔀 Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+      - name: ✅ Approve patch updates
+        if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch'}}
+        run: gh pr review $PR_URL --approve -b "I'm **approving** this pull request because **it includes a patch update**"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+      - name: 📝 Comment on major updates of non-development dependencies
+        if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production'}}
+        run: |
+          gh pr comment $PR_URL --body "I'm **not approving** this PR because **it includes a major update of a dependency used in production**"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
