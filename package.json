@@ -42,7 +42,7 @@
     "typescript": "^5.2.2",
     "vite": "^2.9.14",
     "vitest": "^0.34.5",
-    "vue-tsc": "^1.8.13"
+    "vue-tsc": "^1.8.14"
   },
   "prettier": {
     "printWidth": 140,
