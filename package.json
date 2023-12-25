@@ -35,7 +35,7 @@
     "dotenv": "^16.3.1",
     "eslint": "8.48.0",
     "eslint-plugin-vue": "8.7.1",
-    "gh-pages": "^6.0.0",
+    "gh-pages": "^6.1.1",
     "jsdom": "^22.1.0",
     "prettier": "3.0.3",
     "sass": "^1.66.1",
