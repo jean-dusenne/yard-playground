@@ -15,7 +15,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@vueuse/core": "^10.4.1",
+    "@vueuse/core": "^10.9.0",
     "file-saver": "^2.0.5",
     "floating-vue": "^2.0.0-beta.24",
     "html2canvas": "^1.4.1",
